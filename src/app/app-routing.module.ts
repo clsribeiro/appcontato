@@ -8,8 +8,16 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'home', // home
     pathMatch: 'full'
+  },
+  {
+    path: 'contatos',
+    loadChildren: () => import('./contatos/contatos.module').then( m => m.ContatosPageModule)
+  },
+  {
+    path: 'novocontato',
+    loadChildren: () => import('./novocontato/novocontato.module').then( m => m.NovocontatoPageModule)
   },
 ];
 

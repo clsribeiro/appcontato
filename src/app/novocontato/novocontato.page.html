@@ -1,0 +1,39 @@
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="start">
+      <ion-back-button color="light" text="Voltar" ></ion-back-button>
+    </ion-button>
+    <ion-title>Criar novo contato</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  
+  <div id ="novo-contato">    
+    <form [formGroup] = "formularioNovoContato">       
+      <ion-item>
+        ID:
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder = "Nome:" formControlName = "nome"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder = "CEP:" formControlName = "cep"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder = "Rua:" formControlName = "rua"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder = "Bairro:" formControlName = "bairro"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder = "Cidade:" formControlName = "cidade"></ion-input>
+      </ion-item>
+      <div padding>
+        <ion-button type = "submit" ion-button [disabled] = formularioNovoContato.invalid color ="primary">Salvar</ion-button>
+        <ion-button type = "reset" color ="danger">Limpar</ion-button>        
+      </div>
+    </form>
+  </div>
+</ion-content>
