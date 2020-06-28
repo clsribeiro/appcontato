@@ -1,13 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-button slot="start">
-      <ion-back-button color="light" text="Voltar" ></ion-back-button>
-    </ion-button>
-    <ion-title>Criar novo contato</ion-title>
+    <ion-title>CriarContato</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
-  
+
   <div id ="novo-contato" class="ion-padding">    
     <form name="formularioNovoContato"  #f = "ngForm" (submit)="enviarformulario(f)">     
       <div class="ion-padding">
@@ -46,4 +44,5 @@
       </div>
     </form>
   </div>
+
 </ion-content>

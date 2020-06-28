@@ -19,6 +19,14 @@ const routes: Routes = [
     path: 'novocontato',
     loadChildren: () => import('./novocontato/novocontato.module').then( m => m.NovocontatoPageModule)
   },
+  {
+    path: 'cadastro',
+    loadChildren: () => import('./cadastro/cadastro.module').then( m => m.CadastroPageModule)
+  },
+  {
+    path: 'criarcontato',
+    loadChildren: () => import('./criarcontato/criarcontato.module').then( m => m.CriarcontatoPageModule)
+  },
 ];
 
 @NgModule({

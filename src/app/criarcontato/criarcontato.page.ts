@@ -1,38 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-novocontato',
-  templateUrl: './novocontato.page.html',
-  styleUrls: ['./novocontato.page.scss'],
+  selector: 'app-criarcontato',
+  templateUrl: './criarcontato.page.html',
+  styleUrls: ['./criarcontato.page.scss'],
 })
-export class NovocontatoPage implements OnInit {
+export class CriarcontatoPage implements OnInit {
   nomeFild: null;
   cepFild: null;
   ruaFild: null;
   bairroFild: null;
   cidadeFild: null;
-  formularioNovoContato: FormGroup;
 
-  constructor(
-    public formbuilder: FormBuilder,
-    private alertController: AlertController
-    ){
-    this.formularioNovoContato = this.formbuilder.group(
-      {
-        nome: [null, [Validators.required]],
-        cep: [null, [Validators.required]],
-        rua: [null, [Validators.required]],
-        bairro: [null, [Validators.required]],
-        cidade: [null, [Validators.required]]
-      }
-    );
-   }
+  constructor(private alertController: AlertController) { }
+
   ngOnInit() {
   }
-
 
   async enviarformulario(f: NgForm) {
 
@@ -61,4 +46,5 @@ export class NovocontatoPage implements OnInit {
     });
     await alert.present();
   }
+
 }
