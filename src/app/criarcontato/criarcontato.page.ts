@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -8,22 +8,35 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./criarcontato.page.scss'],
 })
 export class CriarcontatoPage implements OnInit {
+  public formularioNovoContato: NgForm;
+  public formContato: NgForm;
+  idFild: null;
   nomeFild: null;
   cepFild: null;
   ruaFild: null;
   bairroFild: null;
   cidadeFild: null;
 
-  constructor(private alertController: AlertController) { }
+  constructor(private alertController: AlertController) { // public formbuilder: FormBuilder
+    // this.contatoForm = this.formbuilder.group({
+    //  nome: [null, [Validators.required]],
+    //  cep: [null, [Validators.required]],
+    //  rua: [null, [Validators.required]],
+    //  bairro: [null],
+    //  cidade: [null, [Validators.required]]
+    // });
+  }
 
   ngOnInit() {
   }
 
-  async enviarformulario(f: NgForm) {
-
-    const message = 'Contato: ' + this.nomeFild +
+  buscaCep(){
+    console.log(this.formularioNovoContato['this.cepFild'].value);
+  }
+  async cadastrarContato(f: NgForm) {
+    const message = 'Nome: ' + this.nomeFild +
                     '<br>Rua: ' + this.ruaFild +
-                    '<br>Cidade: ' + this.ruaFild;
+                    '<br>Cidade: ' + this.cidadeFild;
 
     const alert = await this.alertController.create({
       header: 'Confirme os dados:',
@@ -34,17 +47,16 @@ export class CriarcontatoPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Canceled');
+            console.log('Cancelado');
           }
         }, {
-          text: 'Ok',
+          text: 'Salvar',
           handler: () => {
-            console.log('Alert Confirmed');
+            console.log(this.nomeFild, this.cepFild, this.ruaFild, this.bairroFild, this.cidadeFild);
           }
         }
       ]
     });
     await alert.present();
   }
-
 }

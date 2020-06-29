@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'criarcontato',
     loadChildren: () => import('./criarcontato/criarcontato.module').then( m => m.CriarcontatoPageModule)
+  },
+  {
+    path: 'testnggroup',
+    loadChildren: () => import('./testnggroup/testnggroup.module').then( m => m.TestnggroupPageModule)
   },
 ];
 
