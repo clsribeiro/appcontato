@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-criarcontato',
@@ -8,35 +8,21 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./criarcontato.page.scss'],
 })
 export class CriarcontatoPage implements OnInit {
-  public formularioNovoContato: NgForm;
-  public formContato: NgForm;
-  idFild: null;
   nomeFild: null;
   cepFild: null;
   ruaFild: null;
   bairroFild: null;
   cidadeFild: null;
-
-  constructor(private alertController: AlertController) { // public formbuilder: FormBuilder
-    // this.contatoForm = this.formbuilder.group({
-    //  nome: [null, [Validators.required]],
-    //  cep: [null, [Validators.required]],
-    //  rua: [null, [Validators.required]],
-    //  bairro: [null],
-    //  cidade: [null, [Validators.required]]
-    // });
-  }
-
+  constructor(
+    private alertController: AlertController
+    ){ }
   ngOnInit() {
   }
+  async enviarformulario(f: NgForm) {
 
-  buscaCep(){
-    console.log(this.formularioNovoContato['this.cepFild'].value);
-  }
-  async cadastrarContato(f: NgForm) {
-    const message = 'Nome: ' + this.nomeFild +
+    const message = 'Contato: ' + this.nomeFild +
                     '<br>Rua: ' + this.ruaFild +
-                    '<br>Cidade: ' + this.cidadeFild;
+                    '<br>Cidade: ' + this.ruaFild;
 
     const alert = await this.alertController.create({
       header: 'Confirme os dados:',
@@ -47,16 +33,17 @@ export class CriarcontatoPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Cancelado');
+            console.log('Canceled');
           }
         }, {
-          text: 'Salvar',
+          text: 'Ok',
           handler: () => {
-            console.log(this.nomeFild, this.cepFild, this.ruaFild, this.bairroFild, this.cidadeFild);
+            console.log('Alert Confirmed');
           }
         }
       ]
     });
     await alert.present();
   }
+
 }

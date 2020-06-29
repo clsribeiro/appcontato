@@ -1,53 +1,49 @@
-<ion-header>  
+<ion-header>
   <ion-toolbar>
     <ion-button slot="start">
       <ion-back-button color="light" text="Voltar" ></ion-back-button>
     </ion-button>
-    <ion-title>Criar Contato</ion-title>
+    <ion-title>Criar novo contato</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  
   <div id ="novo-contato" class="ion-padding">    
-    <form #f = "ngForm" (submit)="cadastrarContato(f)">        
+    <form  #f = "ngForm" (submit)="enviarformulario(f)">     
       <div class="ion-padding">
         <ion-item>
-          <ion-input disabled type="text" placeholder = "ID:" [(ngModel)] = "idFild" name = "ID"></ion-input>
+          ID:
         </ion-item>
       </div>
-      <ion-list>
-        <div class="ion-padding">
-          <ion-item>
-            <ion-input type="text" placeholder = "Nome:" [(ngModel)] = "nomeFild" name = "nome"></ion-input>
-          </ion-item>
-        </div>
-        <div class="ion-padding">
-          <ion-item>
-            <ion-input type="number" placeholder = "CEP:" [(ngModel)] = "cepFild" (blur)="buscaCep()" name = "cep"></ion-input>
-          </ion-item>
-        </div>
-        <div class="ion-padding">
-          <ion-item>
-            <ion-input type="text" placeholder = "Rua:" [(ngModel)] = "ruaFild" name = "rua"></ion-input>
-          </ion-item>
-        </div>
-        <div class="ion-padding">
-          <ion-item>
-            <ion-input type="text" placeholder = "Bairro:" [(ngModel)] = "bairroFild" name = "bairro"></ion-input>
-          </ion-item>
-        </div>
-        <div class="ion-padding">
-          <ion-item>
-            <ion-input disabled type="text" placeholder = "Cidade:" [(ngModel)] = "cidadeFild" name = "cidade"></ion-input>
-          </ion-item>
-        </div>
-      </ion-list>           
+      <div class="ion-padding">
+        <ion-item>
+          <ion-input type="text" placeholder = "Nome:" [(ngModel)] = "nomeFild" name = "nome"></ion-input>
+        </ion-item>
+      </div>
+      <div class="ion-padding">
+        <ion-item>
+          <ion-input type="text" placeholder = "CEP:" [(ngModel)] = "cepFild" name = "cep"></ion-input>
+        </ion-item>
+      </div>
+      <div class="ion-padding">
+        <ion-item>
+          <ion-input type="text" placeholder = "Rua:" [(ngModel)] = "ruaFild" name = "rua"></ion-input>
+        </ion-item>
+      </div>
+      <div class="ion-padding">
+        <ion-item>
+          <ion-input type="text" placeholder = "Bairro:" [(ngModel)] = "bairroFild" name = "bairro"></ion-input>
+        </ion-item>
+      </div>
+      <div class="ion-padding">
+        <ion-item>
+          <ion-input type="text" placeholder = "Cidade:" [(ngModel)] = "cidadeFild" name = "cidade"></ion-input>
+        </ion-item>
+      </div>      
       <div padding>
         <ion-button type = "submit" name = "salvarFormularioContato" color ="primary">Salvar</ion-button>
         <ion-button type = "reset" color ="danger">Limpar</ion-button>        
       </div>
     </form>
   </div>
-
 </ion-content>
