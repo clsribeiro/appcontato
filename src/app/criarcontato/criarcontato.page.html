@@ -9,7 +9,7 @@
 <ion-content>
   
   <div id ="novo-contato" class="ion-padding">    
-    <form  #f = "ngForm" (submit)="enviarformulario(f)">     
+    <form #formContato = "ngForm" (submit)="enviarformulario(formContato)">   <!--novalidate [formGroup]="contatoForm" --> 
       <div class="ion-padding">
         <ion-item>
           ID:
@@ -17,27 +17,27 @@
       </div>
       <div class="ion-padding">
         <ion-item>
-          <ion-input type="text" placeholder = "Nome:" [(ngModel)] = "nomeFild" name = "nome"></ion-input>
+          <ion-input required type="text" placeholder = "Nome:" [(ngModel)] = "nome" name = "nome"></ion-input>
         </ion-item>
       </div>
       <div class="ion-padding">
         <ion-item>
-          <ion-input type="text" placeholder = "CEP:" [(ngModel)] = "cepFild" name = "cep"></ion-input>
+          <ion-input type="text" placeholder = "CEP:" [(ngModel)] = "cep" name = "cep" (ionBlur)="buscarCep()"></ion-input>
         </ion-item>
       </div>
       <div class="ion-padding">
         <ion-item>
-          <ion-input type="text" placeholder = "Rua:" [(ngModel)] = "ruaFild" name = "rua"></ion-input>
+          <ion-input type="text" placeholder = "Rua:" [(ngModel)] = "rua" name = "rua"></ion-input>
         </ion-item>
       </div>
       <div class="ion-padding">
         <ion-item>
-          <ion-input type="text" placeholder = "Bairro:" [(ngModel)] = "bairroFild" name = "bairro"></ion-input>
+          <ion-input type="text" placeholder = "Bairro:" [(ngModel)] = "bairro" name = "bairro"></ion-input>
         </ion-item>
       </div>
       <div class="ion-padding">
         <ion-item>
-          <ion-input type="text" placeholder = "Cidade:" [(ngModel)] = "cidadeFild" name = "cidade"></ion-input>
+          <ion-input type="text" placeholder = "Cidade:" [(ngModel)] = "cidade" name = "cidade"></ion-input>
         </ion-item>
       </div>      
       <div padding>
