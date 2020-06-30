@@ -1,4 +1,4 @@
-
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
@@ -17,19 +17,8 @@ export class CriarcontatoPage implements OnInit {
   cidade: null;
   formbuilder: any;
   constructor(
-    private alertController: AlertController
-    ) {}
-    // public http: HttpClient
-    // public formbuilder: FormBuilder
-    // ){
-    //  this.contatoForm = this.formbuilder.group({
-    //    nome: [null, [Validators.required]],
-    //    cep: [null, [Validators.required]],
-    //    rua: [null, [Validators.required]],
-    //    bairro: [null, [Validators.required]],
-    //    cidade: [null, [Validators.required]]
-    //  });
-    // }
+    private alertController: AlertController,
+    ) {} // private http: HttpClient              //QUANDO EU COLOCO ESSE OBJETO NO CONSTRUTOR DA ERRO NA PAGINA E NAO CARREGA O FORMULÁRIO
   ngOnInit() {
   }
   async enviarformulario(formContato: NgForm) {
@@ -60,7 +49,7 @@ export class CriarcontatoPage implements OnInit {
   buscarCep(formContato: NgForm){
     console.log(this.cep);
   }
-  /*
+  /* METODO PARA BUSCAR CEP
   buscarCep(formContato: NgForm){
     this.http.get('https://viacep.com.br/ws/${this.cep}/json/')
     .map(res => res.jason())
