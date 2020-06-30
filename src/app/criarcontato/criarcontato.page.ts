@@ -39,7 +39,7 @@ export class CriarcontatoPage implements OnInit {
         }, {
           text: 'Ok',
           handler: () => {
-            console.log(formContato.value);
+            console.log(formContato.value); // Fazer funcao para enviar para backend
           }
         }
       ]
