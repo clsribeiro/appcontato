@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ActionSheetController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 
 import { Observable, throwError, Operator } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { MapOperator } from 'rxjs/internal/operators/map';
+// import 'rxjs/add/operator/map';
+
 
 // import 'rxjs/add/operator/map';
 // import { map } from 'rxjs/operators/map';
@@ -18,7 +20,8 @@ import { MapOperator } from 'rxjs/internal/operators/map';
   styleUrls: ['./criarcontato.page.scss'],
 })
 export class CriarcontatoPage implements OnInit {
-  contatoForm: FormGroup;
+  tasks: any[] = [];
+  formContato: NgForm;
   nome: null;
   cep: null;
   rua: null;
@@ -27,11 +30,21 @@ export class CriarcontatoPage implements OnInit {
   formbuilder: any;
   constructor(
     private alertController: AlertController,
-    public http: HttpClient
-  ) {}
-  ngOnInit() {
+    public http: HttpClient,
+    public actionSheetCtrl: ActionSheetController
+  ) {
+    let tasksJson = localStorage.getItem('tasksDb');
+    if (tasksJson != null){
+      this.tasks = JSON.parse(tasksJson);
+    }
   }
-  async enviarformulario(formContato: NgForm) {
+
+
+  ngOnInit() {}
+
+
+
+  async enviarformulario(formContato: NgForm){
     const message = 'Contato: ' + this.nome +
                     '<br>Rua: ' + this.rua +
                     '<br>Cidade: ' + this.cidade;
@@ -58,30 +71,52 @@ export class CriarcontatoPage implements OnInit {
   }
 
   buscarCep(formContato: NgForm){
-  // console.log(this.cep);
-    console.log(this.http.get<any>('https://viacep.com.br/ws/' + this.cep + '/json/'));
-  }
+    // console.log(this.cep);
+      console.log(this.http.get<any>('https://viacep.com.br/ws/' + this.cep + '/json/'));
+    }
 
-  /* // METODO PARA BUSCAR CEP
-  buscarCep(formContato: NgForm){
-    this.http.get('https://viacep.com.br/ws/${this.cep}/json/')
-    .map(res => res.jason())
-    .subscribe((data: any) => {
-      console.log(data);
-    });
-  }
-  */
 
   /*
-  buscarCep(formContato: NgForm){
-    const consultaCEP = this.cep;
-    console.log(this.http.get<any>('https://viacep.com.br/ws/' + consultaCEP + '/json/')) // https://viacep.com.br/ws/01001000/json/
-    .map(res => res.json())
-    .subscribe(data => {
-      console.log(data);
+  async openActions(tasks: any) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Excluir contato?',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Cancelado');
+          }
+        }, {
+          text: 'Sim',
+          handler: () => {
+            console.log('Sim'); // Fazer funcao para enviar para backend
+          }
+        }
+      ]
     });
-  }
-  */
+    */
+
+
+
+
+
+
+
+    // METODO DELETAR CONTATO
+    delete(tasks: any){
+      this.tasks = this.tasks.filter(tasksArray => tasks != tasksArray);
+      this.updateLocalStorage();
+    }
+
+    updateLocalStorage(){
+      localStorage.setItem('tasksDB', JSON.stringify(this.tasks));
+    }
+
+
+
+
 
 
 }
