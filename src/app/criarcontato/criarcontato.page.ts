@@ -20,6 +20,26 @@ import { MapOperator } from 'rxjs/internal/operators/map';
   styleUrls: ['./criarcontato.page.scss'],
 })
 export class CriarcontatoPage implements OnInit {
+  contatos = [
+    {
+      id: 1,
+      nome: 'Cleiton Ribeiro',
+      cep: '33010-000',
+      rua: 'Rua Direita',
+      bairro: 'Centro',
+      cidade: 'Santa Luzia',
+      estado: 'MG',
+    },
+    {
+      id: 2,
+      nome: 'Ricarte Elias',
+      cep: '31160-900',
+      rua: 'Avenida Cristiano Machado',
+      bairro: 'União',
+      cidade: 'Belo Horizonte',
+      estado: 'MG',
+    },
+  ];
   tasks: any[] = [];
   formContato: NgForm;
   nome: null;
@@ -105,8 +125,8 @@ export class CriarcontatoPage implements OnInit {
 
 
     // METODO DELETAR CONTATO
-    delete(tasks: any){
-      this.tasks = this.tasks.filter(tasksArray => tasks != tasksArray);
+    deleteContato(id: number){
+      this.contatos = this.contatos.filter (t => t.id !== id);
       this.updateLocalStorage();
     }
 
