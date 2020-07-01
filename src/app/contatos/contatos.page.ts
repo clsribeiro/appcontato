@@ -34,7 +34,7 @@ export class ContatosPage implements OnInit {
   ];
 
   constructor(private actionSheetController: ActionSheetController) {
-    let tasksJson = localStorage.getItem('tasksDb');
+    const tasksJson = localStorage.getItem('tasksDb');
     if (tasksJson != null){
       this.tasks = JSON.parse(tasksJson);
    }

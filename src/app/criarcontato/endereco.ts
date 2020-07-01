@@ -1,5 +1,4 @@
 export interface Endereco{
-
     bairro: string;
     cep: string;
     complemento: string;
@@ -8,6 +7,4 @@ export interface Endereco{
     localidade: string;
     logradouro: string;
     uf: string;
-    unidade: string;
-
-}
+    unidade: string; }

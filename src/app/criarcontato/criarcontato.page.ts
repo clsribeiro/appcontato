@@ -55,10 +55,10 @@ export class CriarcontatoPage implements OnInit {
     });
     await alert.present();
   }
-  
+
   buscarCep(formContato: NgForm){
     // console.log(this.cep);
-    this.http.get<Endereco>(`https://viacep.com.br/ws/${this.cep}/json/`).subscribe(value =>{
+    this.http.get<Endereco>(`https://viacep.com.br/ws/${this.cep}/json/`).subscribe(value => {
       this.rua = value.logradouro;
       this.cidade = value.uf;
       this.bairro = value.bairro;
