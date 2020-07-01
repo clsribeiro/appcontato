@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CriarcontatoPage } from './../criarcontato/criarcontato.page';
 import { ActionSheetController, IonicModule } from '@ionic/angular';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-contatos',
@@ -8,6 +9,9 @@ import { ActionSheetController, IonicModule } from '@ionic/angular';
   styleUrls: ['./contatos.page.scss'],
 })
 export class ContatosPage implements OnInit {
+  tasks: any[] = [];
+  todosContatos: any;
+  queryText: string;
   contatos = [
     {
       id: 1,
@@ -29,10 +33,32 @@ export class ContatosPage implements OnInit {
     },
   ];
 
-  constructor(private actionSheetController: ActionSheetController) { }
+  constructor(private actionSheetController: ActionSheetController) {
+    let tasksJson = localStorage.getItem('tasksDb');
+    if (tasksJson != null){
+      this.tasks = JSON.parse(tasksJson);
+   }
+    this.queryText = '';
+    this.todosContatos = this.contatos.lastIndexOf.name;
+  }
 
   ngOnInit() {
   }
+  /*
+  filterNome(nome: any){
+    let val = nome.target.value;
+    if (val && val.trim() !== ''){
+      this.contatos = _.values(this.todosContatos);
+      this.contatos = this.contatos.filter((contatos) =>{
+        return (contatos.nome.toLocaleLowerCase().indexOf(val.toLocaleLowerCase()) > -1);
+      });
+    } else{
+      this.contatos = this.todosContatos;
+    }
+
+  }
+  */
+
   async deleteContatoAction(id: number){
     const buttons = [
       {
@@ -43,15 +69,12 @@ export class ContatosPage implements OnInit {
         }
       }
     ];
-    const actionSheet = await
-    this.actionSheetController.create({
-      header: 'Ações',
-      // tslint:disable-next-line: object-literal-shorthand
-      buttons: buttons
-    });
-    await actionSheet.present();
   }
   deleteContato(id: number){
       this.contatos = this.contatos.filter (t => t.id !== id);
+      this.updateLocalStorage();
+  }
+  updateLocalStorage(){
+    localStorage.setItem('tasksDB', JSON.stringify(this.tasks));
   }
 }
