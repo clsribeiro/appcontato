@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { Observable, throwError, Operator } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { MapOperator } from 'rxjs/internal/operators/map';
+import { Contato } from './contato';
 
 
 
@@ -18,11 +19,7 @@ import { MapOperator } from 'rxjs/internal/operators/map';
 })
 export class CriarcontatoPage implements OnInit {
   formContato: NgForm;
-  nome: string;
-  cep: string;
-  rua: string;
-  bairro: string;
-  cidade: string;
+  contato: Contato;
   formbuilder: any;
   constructor(
     private alertController: AlertController,
@@ -31,14 +28,16 @@ export class CriarcontatoPage implements OnInit {
     public db: AngularFireDatabase
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.contato = {} as Contato;
+  }
 
 
   // CRIAR CONTATO
   async enviarformulario(formContato: NgForm){
-    const message = 'Contato: ' + this.nome +
-                    '<br>Rua: ' + this.rua +
-                    '<br>Cidade: ' + this.cidade;
+    const message = 'Contato: ' + this.contato.nome +
+                    '<br>Rua: ' + this.contato.rua +
+                    '<br>Cidade: ' + this.contato.cidade;
     const alert = await this.alertController.create({
       header: 'Confirme os dados:',
       message,
@@ -53,13 +52,30 @@ export class CriarcontatoPage implements OnInit {
         }, {                  // CRIAR CONTATO
           text: 'Ok',
           handler: () => {
-            this.db.database.ref('/contatos').push(this.formContato.value)
-            .then(() => {
-              console.log('DeuBOM');
-              // tslint:disable-next-line: no-unused-expression
-              this.formContato.reset;
+            console.log(this.contato);
+            this.db.database.ref('/contatos').push(this.contato).then(() => {
+              this.contato = {} as Contato;
+              this.alertController.create({
+                header: 'Cadastro realizado!',
+                message: 'Deseja cadastrar um novo contato?',
+                buttons: [
+                    {
+                      text: 'Sim',
+                      role: 'cancel',
+                      cssClass: 'secondary',
+                      handler: () => {
+                        console.log('Cancelado');
+                      }
+                    },
+                    {
+                      text: 'Não',
+                      handler: () => {
+                        history.back();
+                      }
+                    }
+                ]
+              }).then(a => a.present());
             });
-            // console.log(formContato.value); // Fazer funcao para enviar para backend
           }
         }
       ]
@@ -69,10 +85,10 @@ export class CriarcontatoPage implements OnInit {
 
   buscarCep(formContato: NgForm){
     // console.log(this.cep);
-    this.http.get<Endereco>(`https://viacep.com.br/ws/${this.cep}/json/`).subscribe(value => {
-      this.rua = value.logradouro;
-      this.bairro = value.bairro;
-      this.cidade = value.localidade;
+    this.http.get<Endereco>(`https://viacep.com.br/ws/${this.contato.cep}/json/`).subscribe(value => {
+      this.contato.rua = value.logradouro;
+      this.contato.bairro = value.bairro;
+      this.contato.cidade = value.localidade;
     });
   }
 }

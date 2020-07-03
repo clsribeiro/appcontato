@@ -20,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./criarcontato/criarcontato.module').then( m => m.CriarcontatoPageModule)
   },
   {
-    path: 'editar',
+    path: 'editar/:id',
     loadChildren: () => import('./editar/editar.module').then( m => m.EditarPageModule)
   },
 ];

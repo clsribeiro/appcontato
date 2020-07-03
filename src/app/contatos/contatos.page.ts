@@ -7,6 +7,8 @@ import * as _ from 'lodash';
 import { values } from 'lodash';
 import { RouterModule, Routes, ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { Contato } from '../criarcontato/contato';
 
 
 
@@ -17,34 +19,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./contatos.page.scss'],
 })
 export class ContatosPage implements OnInit {
-  contatos = [
-    {
-      _id: 1,
-      nome: 'Cleiton Ribeiro',
-      cep: '33010-000',
-      rua: 'Rua Direita',
-      bairro: 'Centro',
-      cidade: 'Santa Luzia',
-      estado: 'MG',
-    },
-    {
-      _id: 2,
-      nome: 'Vai Anitta',
-      cep: '31160-900',
-      rua: 'Avenida Cristiano Machado',
-      bairro: 'União',
-      cidade: 'Belo Horizonte',
-      estado: 'MG',
-    },
-  ];
-  contatosDb;
+
+  contatos: Contato[];
+
 
   constructor(private actionSheetController: ActionSheetController,
-              public http: HttpClient, private navController: NavController) {
-    this.contatosDb = [];
+              public http: HttpClient,
+              public router: Router,
+              private navController: NavController,
+              private db: AngularFireDatabase,
+              ) {
+    this.contatos = [];
    }
 
   ngOnInit() {
+    this.db.list<Contato>('contatos').valueChanges().subscribe(contatos => {
+      this.contatos = contatos;
+    });
   }
 
   ionViewWillEnter(){
@@ -57,13 +48,13 @@ export class ContatosPage implements OnInit {
      this.http.get<any>('https://projetosunibh.firebaseio.com/TESTE.json').subscribe(values);
   }
 
-  editContato(id){
-    console.log(id);
-    this.navController.navigateForward('editar'); // Como passar o id por parametro e inserir eles no formulário da pag EDITAR
+  editContato(nome:string){
+    console.log(nome);
+    this.router.navigate(['editar', nome]); // Como passar o id por parametro e inserir eles no formulário da pag EDITAR
   }
 
-  deleteContato(id: number){
-      this.contatos = this.contatos.filter (t => t._id !== id);
+  deleteContato(id: string){
+      this.contatos = this.contatos.filter (t => t.nome !== id);
   }
 
 }

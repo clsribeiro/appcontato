@@ -18,11 +18,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { from } from 'rxjs';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   entryComponents: [],
-  imports: [BrowserModule,
+  imports: [
+    BrowserModule,
     IonicModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
     AppRoutingModule,
     HttpClientModule
   ],
@@ -30,7 +34,7 @@ import { from } from 'rxjs';
     StatusBar,
     SplashScreen,
     AngularFireDatabase,
-    AngularFireDatabaseModule,
+    ,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
   bootstrap: [AppComponent]
