@@ -1,12 +1,14 @@
+import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
 import { Endereco } from './endereco';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { AlertController, ActionSheetController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 
 import { Observable, throwError, Operator } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { MapOperator } from 'rxjs/internal/operators/map';
+
 
 
 @Component({
@@ -25,11 +27,14 @@ export class CriarcontatoPage implements OnInit {
   constructor(
     private alertController: AlertController,
     public http: HttpClient,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    public db: AngularFireDatabase
   ) { }
 
   ngOnInit() {}
 
+
+  // CRIAR CONTATO
   async enviarformulario(formContato: NgForm){
     const message = 'Contato: ' + this.nome +
                     '<br>Rua: ' + this.rua +
@@ -45,10 +50,16 @@ export class CriarcontatoPage implements OnInit {
           handler: () => {
             console.log('Cancelado');
           }
-        }, {
+        }, {                  // CRIAR CONTATO
           text: 'Ok',
           handler: () => {
-            console.log(formContato.value); // Fazer funcao para enviar para backend
+            this.db.database.ref('/contatos').push(this.formContato.value)
+            .then(() => {
+              console.log('DeuBOM');
+              // tslint:disable-next-line: no-unused-expression
+              this.formContato.reset;
+            });
+            // console.log(formContato.value); // Fazer funcao para enviar para backend
           }
         }
       ]
@@ -60,8 +71,8 @@ export class CriarcontatoPage implements OnInit {
     // console.log(this.cep);
     this.http.get<Endereco>(`https://viacep.com.br/ws/${this.cep}/json/`).subscribe(value => {
       this.rua = value.logradouro;
-      this.cidade = value.uf;
       this.bairro = value.bairro;
+      this.cidade = value.localidade;
     });
   }
 }

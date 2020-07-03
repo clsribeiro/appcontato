@@ -7,38 +7,34 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-button [routerLink] = "['/criarcontato']" routerdirection = "forward" color="tertiary" expand="block">Criar novo contato</ion-button> 
-  <ion-toolbar>
+<ion-content padding>
   <!-- <ion-searchbar placeholder = "Digite o nome do contato"
     [(ngModel)] = "queryText" (ionInput) = "filterNome($event)" clearInput 
 
   </ion-searchbar>>-->
-  </ion-toolbar>   
-  <ion-list>
-    <ion-item *ngFor = 'let contatos of contatos'>
-      <ion-grid>
-        <ion-row>
-         ID: {{contatos.id}}
-        </ion-row>
-        <ion-row>
-         Nome: {{contatos.nome}}
-        </ion-row>
-        <ion-row>
-         CEP: {{contatos.cep}}
-        </ion-row>
-        <ion-row>
-         Rua: {{contatos.rua}}
-        </ion-row>
-        <ion-row>
-         Bairro: {{contatos.bairro}}
-        </ion-row>
-        <ion-row>
-         Cidade: {{contatos.cidade}}
-        </ion-row>        
-        <ion-button color="danger" size="small" (click) = 'deleteContato(contatos.id)'>Excluir</ion-button>
-       <!-- <ion-button color="medium" size="small">Editar</ion-button> -->      
-      </ion-grid>
-    </ion-item>
-  </ion-list>
+
+  <ion-button [routerLink] = "['/criarcontato']" routerdirection = "forward" color="tertiary" expand="block">Criar novo contato</ion-button> 
+  <ion-toolbar>
+<ion-card *ngFor = 'let contato of contatos'>  
+    <ion-card-content>
+      <ion-card-title>
+        {{contato.nome}}
+      </ion-card-title>      
+      <p>
+        CEP: {{contato.cep}}
+      </p>
+      <p>
+        Rua: {{contato.rua}}
+      </p>
+      <p>
+        Bairro: {{contato.bairro}}
+      </p>
+      <p>
+        Cidade: {{contato.cidade}}
+      </p>
+      <ion-button color="danger" size="small" (click) = 'deleteContato(contato._id)'>Excluir</ion-button>
+      <ion-button color="medium" size="small" (click) = 'editContato(contato._id)'>Editar</ion-button>
+    </ion-card-content>    
+  </ion-card>
+  </ion-toolbar>  
 </ion-content>

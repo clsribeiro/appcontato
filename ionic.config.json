@@ -1,6 +1,8 @@
 {
   "name": "appContato",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "b6a79150"
 }

@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { EditarPage } from './../editar/editar.page';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CriarcontatoPage } from './../criarcontato/criarcontato.page';
-import { ActionSheetController, IonicModule } from '@ionic/angular';
+import { ActionSheetController, IonicModule, NavController, NavParams } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
+import { values } from 'lodash';
+import { RouterModule, Routes, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+
+
+
 
 @Component({
   selector: 'app-contatos',
@@ -9,12 +17,9 @@ import * as _ from 'lodash';
   styleUrls: ['./contatos.page.scss'],
 })
 export class ContatosPage implements OnInit {
-  tasks: any[] = [];
-  todosContatos: any;
-  queryText: string;
   contatos = [
     {
-      id: 1,
+      _id: 1,
       nome: 'Cleiton Ribeiro',
       cep: '33010-000',
       rua: 'Rua Direita',
@@ -23,8 +28,8 @@ export class ContatosPage implements OnInit {
       estado: 'MG',
     },
     {
-      id: 2,
-      nome: 'Ricarte Elias',
+      _id: 2,
+      nome: 'Vai Anitta',
       cep: '31160-900',
       rua: 'Avenida Cristiano Machado',
       bairro: 'União',
@@ -32,49 +37,33 @@ export class ContatosPage implements OnInit {
       estado: 'MG',
     },
   ];
+  contatosDb;
 
-  constructor(private actionSheetController: ActionSheetController) {
-    const tasksJson = localStorage.getItem('tasksDb');
-    if (tasksJson != null){
-      this.tasks = JSON.parse(tasksJson);
+  constructor(private actionSheetController: ActionSheetController,
+              public http: HttpClient, private navController: NavController) {
+    this.contatosDb = [];
    }
-    this.queryText = '';
-    this.todosContatos = this.contatos.lastIndexOf.name;
-  }
 
   ngOnInit() {
   }
-  /*
-  filterNome(nome: any){
-    let val = nome.target.value;
-    if (val && val.trim() !== ''){
-      this.contatos = _.values(this.todosContatos);
-      this.contatos = this.contatos.filter((contatos) =>{
-        return (contatos.nome.toLocaleLowerCase().indexOf(val.toLocaleLowerCase()) > -1);
-      });
-    } else{
-      this.contatos = this.todosContatos;
-    }
 
+  ionViewWillEnter(){
+    console.log('Load');
+    this.bucarDadosFirebase();
   }
-  */
 
-  async deleteContatoAction(id: number){
-    const buttons = [
-      {
-        text: 'Excluir Contato',
-        role: 'destructive',
-        handler: () => {
-          this.deleteContatoAction(id);
-        }
-      }
-    ];
+   bucarDadosFirebase(){
+     console.log('Teste');
+     this.http.get<any>('https://projetosunibh.firebaseio.com/TESTE.json').subscribe(values);
   }
+
+  editContato(id){
+    console.log(id);
+    this.navController.navigateForward('editar'); // Como passar o id por parametro e inserir eles no formulário da pag EDITAR
+  }
+
   deleteContato(id: number){
-      this.contatos = this.contatos.filter (t => t.id !== id);
-      this.updateLocalStorage();
+      this.contatos = this.contatos.filter (t => t._id !== id);
   }
-  updateLocalStorage(){
-    localStorage.setItem('tasksDB', JSON.stringify(this.tasks));
-  }
+
 }

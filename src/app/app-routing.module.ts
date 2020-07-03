@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'criarcontato',
     loadChildren: () => import('./criarcontato/criarcontato.module').then( m => m.CriarcontatoPageModule)
   },
+  {
+    path: 'editar',
+    loadChildren: () => import('./editar/editar.module').then( m => m.EditarPageModule)
+  },
 ];
 
 @NgModule({
