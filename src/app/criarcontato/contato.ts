@@ -4,4 +4,6 @@ export interface Contato{
     rua: string;
     bairro: string;
     cidade: string;
+    id: string;
+
 }

@@ -1,3 +1,4 @@
+import { ContatoService } from './contato.service';
 import { environment } from './../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -11,6 +12,7 @@ import { AngularFireModule  } from '@angular/fire';
 import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
 import { NavController } from '@ionic/angular';
 import { RouterModule, Routes } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 
 import { AppComponent } from './app.component';
@@ -31,7 +33,9 @@ import { from } from 'rxjs';
     HttpClientModule
   ],
   providers: [
+    DatePipe,
     StatusBar,
+    ContatoService,
     SplashScreen,
     AngularFireDatabase,
     ,

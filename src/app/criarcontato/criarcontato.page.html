@@ -6,18 +6,12 @@
     <ion-title>Criar novo contato</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  
+<ion-content>  
   <div id ="novo-contato" class="ion-padding">    
-    <form #formContato = "ngForm" (submit)="enviarformulario(formContato)">   <!--novalidate [formGroup]="contatoForm" --> 
+    <form #formContato = "ngForm" (submit)="enviarformulario(formContato)">   <!--novalidate [formGroup]="contatoForm" -->      
       <div class="ion-padding">
         <ion-item>
-          ID:
-        </ion-item>
-      </div>
-      <div class="ion-padding">
-        <ion-item>
-          <ion-input required type="text" placeholder = "Nome:" [(ngModel)] = "contato.nome" name = "nome"></ion-input>
+          <ion-input required type="text"  placeholder = "Nome:" [(ngModel)] = "contato.nome" name = "nome"></ion-input>
         </ion-item>
       </div>
       <div class="ion-padding">

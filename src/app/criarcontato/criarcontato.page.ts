@@ -1,3 +1,4 @@
+import { values } from 'lodash';
 import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
 import { Endereco } from './endereco';
 import { HttpClient } from '@angular/common/http';
@@ -9,6 +10,7 @@ import { Observable, throwError, Operator } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { MapOperator } from 'rxjs/internal/operators/map';
 import { Contato } from './contato';
+import { DatePipe, formatDate } from '@angular/common';
 
 
 
@@ -21,15 +23,17 @@ export class CriarcontatoPage implements OnInit {
   formContato: NgForm;
   contato: Contato;
   formbuilder: any;
+  idContato = new Date();
   constructor(
     private alertController: AlertController,
     public http: HttpClient,
     public actionSheetCtrl: ActionSheetController,
+    private datePipe: DatePipe,
     public db: AngularFireDatabase
   ) { }
-
   ngOnInit() {
     this.contato = {} as Contato;
+    this.contato.id = this.datePipe.transform(this.idContato, 'yyyyMMddHHmmss');
   }
 
 
@@ -37,7 +41,8 @@ export class CriarcontatoPage implements OnInit {
   async enviarformulario(formContato: NgForm){
     const message = 'Contato: ' + this.contato.nome +
                     '<br>Rua: ' + this.contato.rua +
-                    '<br>Cidade: ' + this.contato.cidade;
+                    '<br>Cidade: ' + this.contato.cidade +
+                    '<br>ID: ' + this.contato.id;
     const alert = await this.alertController.create({
       header: 'Confirme os dados:',
       message,
@@ -47,14 +52,15 @@ export class CriarcontatoPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Cancelado');
+            console.log('Dados do formulario cancelado.');
           }
         }, {                  // CRIAR CONTATO
           text: 'Ok',
           handler: () => {
-            console.log(this.contato);
+            console.log('Contato:', this.contato);
             this.db.database.ref('/contatos').push(this.contato).then(() => {
               this.contato = {} as Contato;
+              console.log('Contato add no BD.');
               this.alertController.create({
                 header: 'Cadastro realizado!',
                 message: 'Deseja cadastrar um novo contato?',
@@ -64,7 +70,7 @@ export class CriarcontatoPage implements OnInit {
                       role: 'cancel',
                       cssClass: 'secondary',
                       handler: () => {
-                        console.log('Cancelado');
+                        console.log('Formulario limpo para noco cadastro.');
                       }
                     },
                     {
@@ -82,9 +88,8 @@ export class CriarcontatoPage implements OnInit {
     });
     await alert.present();
   }
-
   buscarCep(formContato: NgForm){
-    // console.log(this.cep);
+    console.log('O CEP eh:', this.contato.cep);
     this.http.get<Endereco>(`https://viacep.com.br/ws/${this.contato.cep}/json/`).subscribe(value => {
       this.contato.rua = value.logradouro;
       this.contato.bairro = value.bairro;
