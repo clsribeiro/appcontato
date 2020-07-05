@@ -13,11 +13,11 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/da
 import { NavController } from '@ionic/angular';
 import { RouterModule, Routes } from '@angular/router';
 import { DatePipe } from '@angular/common';
-
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { from } from 'rxjs';
+import { ContatoDataService } from './contatos/shared/contato-data.service';
+import { Contato } from './contatos/shared/contato';
 
 @NgModule({
   declarations: [
@@ -38,8 +38,9 @@ import { from } from 'rxjs';
     ContatoService,
     SplashScreen,
     AngularFireDatabase,
-    ,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+    ContatoService,
+    ContatoDataService,
+    Contato, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
   bootstrap: [AppComponent]
 })

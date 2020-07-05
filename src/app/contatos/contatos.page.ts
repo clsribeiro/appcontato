@@ -1,7 +1,5 @@
-import { ContatoService } from './../contato.service';
 import { NgForm } from '@angular/forms';
 import { MapOperator } from 'rxjs/internal/operators/map';
-import { Contato } from './../criarcontato/contato';
 import { EditarPage } from './../editar/editar.page';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CriarcontatoPage } from './../criarcontato/criarcontato.page';
@@ -9,9 +7,15 @@ import { ActionSheetController, IonicModule, NavController, NavParams } from '@i
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 import { values } from 'lodash';
-import { RouterModule, Routes, ActivatedRoute } from '@angular/router';
+import { RouterModule, Routes, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Router } from '@angular/router';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { map } from 'rxjs/operators';
+import { ContatoService } from './shared/contato.service';
+import { Observable } from 'rxjs';
+import { ContatoDataService } from './shared/contato-data.service';
+import { Contato } from './shared/contato';
+
 
 
 
@@ -23,30 +27,38 @@ import { AngularFireDatabase } from '@angular/fire/database';
 export class ContatosPage implements OnInit {
   formContato: NgForm;
   contato: Contato;
+  contatos: Observable<any>;
 
   constructor(private actionSheetController: ActionSheetController,
               public http: HttpClient,
               public router: Router,
               private navController: NavController,
               private db: AngularFireDatabase,
-              private contatoService: ContatoService
+              private contatoService: ContatoService,
+              private contatoDataService: ContatoDataService,
               ) {
-    this.contatos = [];
+
    }
-  contatos: Contato[];
+
   ngOnInit() {
-    this.db.list<Contato>('contatos').valueChanges().subscribe(contatos => {
-      this.contatos = contatos;
-    });
+    // this.http.get('https://projetosunibh.firebaseio.com/contatos.json')
+    //  .subscribe(data => {
+    //   console.log('DadosFireBase: ', data); });
+    // this.db.list<Contato>('contatos').valueChanges().subscribe(contatos => {
+    //   this.contatos = contatos;
+    // });
+    this.contatos = this.contatoService.getAll();
+    console.log(this.contatos);
+  }
+  editContato(contato){
+   this.contatoDataService.changeContato(contato, contato.key );
+   this.router.navigate(['criarcontato']);
   }
 
-  editContato(nome: string){
-    console.log(nome);
-    this.router.navigate(['editar', nome]); // Como passar o id por parametro e inserir eles no formulário da pag EDITAR
+  // deleteContato(id: string){
+  //   this.contatos = this.contatos.filter (t => t.nome !== id);
+  // }
+  public delete(key: string) {
+    this.db.object(`contatos/${key}`).remove();
   }
-
-  deleteContato(id: string){
-    this.contatos = this.contatos.filter (t => t.nome !== id);
-  }
-
 }

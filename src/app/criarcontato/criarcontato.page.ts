@@ -5,12 +5,14 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Output } from '@angular/core';
 import { AlertController, ActionSheetController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
-
+import { Optional } from '@angular/core';
 import { Observable, throwError, Operator } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { MapOperator } from 'rxjs/internal/operators/map';
-import { Contato } from './contato';
 import { DatePipe, formatDate } from '@angular/common';
+import { ContatoDataService } from '../contatos/shared/contato-data.service';
+import { Contato } from '../contatos/shared/contato';
+import { ContatoService } from '../contato.service';
 
 
 
@@ -21,28 +23,43 @@ import { DatePipe, formatDate } from '@angular/common';
 })
 export class CriarcontatoPage implements OnInit {
   formContato: NgForm;
-  contato: Contato;
   formbuilder: any;
   idContato = new Date();
+  key = '' ;
+  contato: Contato;
+
+
   constructor(
     private alertController: AlertController,
     public http: HttpClient,
     public actionSheetCtrl: ActionSheetController,
     private datePipe: DatePipe,
-    public db: AngularFireDatabase
-  ) { }
+    public db: AngularFireDatabase,
+    private contatoDataService: ContatoDataService,
+    private contatoService: ContatoService,
+  )
+  { }
   ngOnInit() {
-    this.contato = {} as Contato;
-    this.contato.id = this.datePipe.transform(this.idContato, 'yyyyMMddHHmmss');
-  }
 
+    this.contato = new Contato();
+    this.contatoDataService.currentContato.subscribe(data => {
+      if (data.contato && data.key) {
+        this.contato = new Contato();
+        this.contato.nome = data.contato.nome;
+        this.contato.bairro = data.contato.bairro;
+        this.contato.cep = data.contato.cep;
+        this.contato.cidade = data.contato.cidade;
+        this.contato.rua = data.contato.rua;
+        this.key = data.key;
+        }
+      });
+  }
 
   // CRIAR CONTATO
   async enviarformulario(formContato: NgForm){
     const message = 'Contato: ' + this.contato.nome +
                     '<br>Rua: ' + this.contato.rua +
-                    '<br>Cidade: ' + this.contato.cidade +
-                    '<br>ID: ' + this.contato.id;
+                    '<br>Cidade: ' + this.contato.cidade;
     const alert = await this.alertController.create({
       header: 'Confirme os dados:',
       message,

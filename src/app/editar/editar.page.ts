@@ -1,5 +1,6 @@
 import { CriarcontatoPage } from './../criarcontato/criarcontato.page';
 import { Component, OnInit } from '@angular/core';
+import { Contato } from '../criarcontato/contato';
 
 
 @Component({
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./editar.page.scss'],
 })
 export class EditarPage implements OnInit {
-
+  contato: Contato;
   constructor() { }
 
   ngOnInit() {

@@ -15,7 +15,7 @@
 
   <ion-button [routerLink] = "['/criarcontato']" routerdirection = "forward" color="tertiary" expand="block">Criar novo contato</ion-button> 
   <ion-toolbar>
-<ion-card *ngFor = 'let contato of contatos'>  
+<ion-card *ngFor = 'let contato of contatos | async'>  
     <ion-card-content>
       <ion-card-title>
         {{contato.nome}}
@@ -31,9 +31,10 @@
       </p>
       <p>
         Cidade: {{contato.cidade}}
-      </p>                   
-      <ion-button color="danger" size="small" (click) = 'deleteContato(contato.nome)'>Excluir</ion-button>
-      <ion-button color="medium" size="small" (click) = 'editContato(contato.nome)'>Editar</ion-button>
+      </p> 
+                      
+      <ion-button color="danger" size="small" (click) = 'delete(this.contato)'>Excluir</ion-button>
+      <ion-button color="medium" size="small" (click) = 'editContato(contato)'>Editar</ion-button>
     </ion-card-content>    
   </ion-card>
   </ion-toolbar>
