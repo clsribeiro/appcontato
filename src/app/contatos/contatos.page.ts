@@ -37,12 +37,7 @@ export class ContatosPage implements OnInit {
    }
 
   ngOnInit() {
-    // this.http.get('https://projetosunibh.firebaseio.com/contatos.json')
-    //  .subscribe(data => {
-    //   console.log('DadosFireBase: ', data); });
-    // this.db.list<Contato>('contatos').valueChanges().subscribe(contatos => {
-    //   this.contatos = contatos;
-    // });
+
     this.contatos = this.contatoService.getAll();
     console.log(this.contatos);
   }
@@ -50,10 +45,6 @@ export class ContatosPage implements OnInit {
    this.contatoDataService.changeContato(contato, contato.key );
    this.router.navigate(['criarcontato']);
   }
-
-  // deleteContato(id: string){
-  //   this.contatos = this.contatos.filter (t => t.nome !== id);
-  // }
   public delete(key: string) {
     this.db.object(`contatos/${key}`).remove();
   }

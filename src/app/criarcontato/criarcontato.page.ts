@@ -85,6 +85,7 @@ export class CriarcontatoPage implements OnInit {
                       role: 'cancel',
                       cssClass: 'secondary',
                       handler: () => {
+                        this.message = 'Cadastro realizado!';
                         console.log('Formulario limpo para novo cadastro.');
                       }
                     },
@@ -115,7 +116,6 @@ export class CriarcontatoPage implements OnInit {
     this.contato = new Contato();
   }
 
-
   buscarCep(){
     console.log('O CEP eh:', this.contato.cep);
     this.contatoService.buscarCep(this.contato.cep).subscribe(value => {
@@ -130,29 +130,3 @@ export class CriarcontatoPage implements OnInit {
 
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-1) Botão de deletar;
-2) Limpar observador;
-3) Corrigir pastas;
-*/
-
-
-
-
-
-
-
