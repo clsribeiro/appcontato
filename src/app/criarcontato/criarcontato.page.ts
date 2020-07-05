@@ -12,7 +12,7 @@ import { MapOperator } from 'rxjs/internal/operators/map';
 import { DatePipe, formatDate } from '@angular/common';
 import { ContatoDataService } from '../contatos/shared/contato-data.service';
 import { Contato } from '../contatos/shared/contato';
-import { ContatoService } from '../contato.service';
+import { ContatoService } from '../contatos/shared/contato.service';
 
 
 
@@ -75,11 +75,11 @@ export class CriarcontatoPage implements OnInit {
           text: 'Ok',
           handler: () => {
             console.log('Contato:', this.contato);
-            this.db.database.ref('/contatos').push(this.contato).then(() => {
+            this.onSubmit().then(() => {
               this.contato = {} as Contato;
               console.log('Contato add no BD.');
               this.alertController.create({
-                header: 'Cadastro realizado!',
+                header: this.key ? 'Cadastro atualizado!' : 'Cadastro realizado!',
                 message: 'Deseja cadastrar um novo contato?',
                 buttons: [
                     {
@@ -105,6 +105,17 @@ export class CriarcontatoPage implements OnInit {
     });
     await alert.present();
   }
+
+  async onSubmit(){
+    if (this.key) {
+      this.contatoService.update(this.contato, this.key);
+    } else {
+      this.contatoService.insert(this.contato);
+    }
+    this.contato = new Contato();
+  }
+
+
   buscarCep(formContato: NgForm){
     console.log('O CEP eh:', this.contato.cep);
     this.http.get<Endereco>(`https://viacep.com.br/ws/${this.contato.cep}/json/`).subscribe(value => {
@@ -114,3 +125,11 @@ export class CriarcontatoPage implements OnInit {
     });
   }
 }
+
+
+
+/*
+1) Botão de deletar;
+2) Limpar observador;
+3) Corrigir pastas;
+*/
