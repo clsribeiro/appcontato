@@ -1,14 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Contato } from './contato';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { Endereco } from 'src/app/criarcontato/endereco';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContatoService {
 
-  constructor(private db: AngularFireDatabase) { }
+  constructor(private db: AngularFireDatabase, private http: HttpClient) { }
 
   insert(contato: Contato) {
     this.db.list('contatos').push(contato)
@@ -35,5 +37,9 @@ export class ContatoService {
 
   public delete(key: string) {
     this.db.object(`contatos/${key}`).remove();
+  }
+
+  buscarCep(cep: string){
+    return this.http.get<Endereco>(`https://viacep.com.br/ws/${cep}/json/`);
   }
 }

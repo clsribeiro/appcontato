@@ -1,19 +1,13 @@
-import { values } from 'lodash';
+import { Router, RouterModule } from '@angular/router';
 import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
-import { Endereco } from './endereco';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Output } from '@angular/core';
-import { AlertController, ActionSheetController } from '@ionic/angular';
-import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
-import { Optional } from '@angular/core';
-import { Observable, throwError, Operator } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { AlertController, ActionSheetController, NavController } from '@ionic/angular';
+import { FormBuilder, Validators, NgForm } from '@angular/forms';
 import { MapOperator } from 'rxjs/internal/operators/map';
-import { DatePipe, formatDate } from '@angular/common';
 import { ContatoDataService } from '../contatos/shared/contato-data.service';
 import { Contato } from '../contatos/shared/contato';
 import { ContatoService } from '../contatos/shared/contato.service';
-
 
 
 @Component({
@@ -27,16 +21,18 @@ export class CriarcontatoPage implements OnInit {
   idContato = new Date();
   key = '' ;
   contato: Contato;
+  message: string ;
 
 
   constructor(
     private alertController: AlertController,
     public http: HttpClient,
     public actionSheetCtrl: ActionSheetController,
-    private datePipe: DatePipe,
     public db: AngularFireDatabase,
     private contatoDataService: ContatoDataService,
     private contatoService: ContatoService,
+    public navController: NavController,
+    public router: Router
   )
   { }
   ngOnInit() {
@@ -55,8 +51,10 @@ export class CriarcontatoPage implements OnInit {
       });
   }
 
+
+
   // CRIAR CONTATO
-  async enviarformulario(formContato: NgForm){
+  async enviarformulario(){
     const message = 'Contato: ' + this.contato.nome +
                     '<br>Rua: ' + this.contato.rua +
                     '<br>Cidade: ' + this.contato.cidade;
@@ -76,10 +74,10 @@ export class CriarcontatoPage implements OnInit {
           handler: () => {
             console.log('Contato:', this.contato);
             this.onSubmit().then(() => {
-              this.contato = {} as Contato;
+              this.contatoDataService.changeContato(null, '' );
               console.log('Contato add no BD.');
               this.alertController.create({
-                header: this.key ? 'Cadastro atualizado!' : 'Cadastro realizado!',
+                header: this.key === '' ? 'Cadastro realizado!' : 'Cadastro atualizado!',
                 message: 'Deseja cadastrar um novo contato?',
                 buttons: [
                     {
@@ -87,13 +85,13 @@ export class CriarcontatoPage implements OnInit {
                       role: 'cancel',
                       cssClass: 'secondary',
                       handler: () => {
-                        console.log('Formulario limpo para noco cadastro.');
+                        console.log('Formulario limpo para novo cadastro.');
                       }
                     },
                     {
                       text: 'Não',
                       handler: () => {
-                        history.back();
+                             this.router.navigate(['contatos']);
                       }
                     }
                 ]
@@ -109,22 +107,40 @@ export class CriarcontatoPage implements OnInit {
   async onSubmit(){
     if (this.key) {
       this.contatoService.update(this.contato, this.key);
+      this.message += ' atualizado!';
     } else {
       this.contatoService.insert(this.contato);
+      this.message = 'Cadastro realizado!';
     }
     this.contato = new Contato();
   }
 
 
-  buscarCep(formContato: NgForm){
+  buscarCep(){
     console.log('O CEP eh:', this.contato.cep);
-    this.http.get<Endereco>(`https://viacep.com.br/ws/${this.contato.cep}/json/`).subscribe(value => {
+    this.contatoService.buscarCep(this.contato.cep).subscribe(value => {
       this.contato.rua = value.logradouro;
       this.contato.bairro = value.bairro;
       this.contato.cidade = value.localidade;
     });
   }
+
+  delete(key: string){
+    this.contatoService.delete(key);
+
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -133,3 +149,10 @@ export class CriarcontatoPage implements OnInit {
 2) Limpar observador;
 3) Corrigir pastas;
 */
+
+
+
+
+
+
+

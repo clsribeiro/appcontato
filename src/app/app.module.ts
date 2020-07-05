@@ -1,4 +1,4 @@
-import { ContatoService } from './contato.service';
+
 import { environment } from './../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -18,6 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { from } from 'rxjs';
 import { ContatoDataService } from './contatos/shared/contato-data.service';
 import { Contato } from './contatos/shared/contato';
+import { ContatoService } from './contatos/shared/contato.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,6 @@ import { Contato } from './contatos/shared/contato';
   providers: [
     DatePipe,
     StatusBar,
-    ContatoService,
     SplashScreen,
     AngularFireDatabase,
     ContatoService,

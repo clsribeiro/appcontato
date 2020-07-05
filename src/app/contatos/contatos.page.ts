@@ -1,16 +1,12 @@
 import { NgForm } from '@angular/forms';
-import { MapOperator } from 'rxjs/internal/operators/map';
-import { EditarPage } from './../editar/editar.page';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CriarcontatoPage } from './../criarcontato/criarcontato.page';
 import { ActionSheetController, IonicModule, NavController, NavParams } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
-import { values } from 'lodash';
 import { RouterModule, Routes, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Router } from '@angular/router';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { map } from 'rxjs/operators';
 import { ContatoService } from './shared/contato.service';
 import { Observable } from 'rxjs';
 import { ContatoDataService } from './shared/contato-data.service';

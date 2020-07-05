@@ -8,13 +8,9 @@
 </ion-header>
 
 <ion-content padding>
-  <!-- <ion-searchbar placeholder = "Digite o nome do contato"
-    [(ngModel)] = "queryText" (ionInput) = "filterNome($event)" clearInput 
-
-  </ion-searchbar>>-->
-
   <ion-button [routerLink] = "['/criarcontato']" routerdirection = "forward" color="tertiary" expand="block">Criar novo contato</ion-button> 
   <ion-toolbar>
+    <ion-searchbar placeholder="Buscar contato"></ion-searchbar>    
 <ion-card *ngFor = 'let contato of contatos | async'>  
     <ion-card-content>
       <ion-card-title>
@@ -33,7 +29,7 @@
         Cidade: {{contato.cidade}}
       </p> 
                       
-      <ion-button color="danger" size="small" (click) = 'delete(this.contato)'>Excluir</ion-button>
+      <ion-button color="danger" size="small" (click) = 'delete(contato.key)'>Excluir</ion-button>
       <ion-button color="medium" size="small" (click) = 'editContato(contato)'>Editar</ion-button>
     </ion-card-content>    
   </ion-card>

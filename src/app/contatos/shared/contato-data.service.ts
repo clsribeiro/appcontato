@@ -15,5 +15,7 @@ export class ContatoDataService {
     // tslint:disable-next-line: object-literal-shorthand
     this.contatoSource.next({ contato: contato, key: key });
   }
+
+
 }
 
