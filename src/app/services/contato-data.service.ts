@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Contato } from './contato';
+import { Contato } from '../pages/contatos/interfaces/contato';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,5 @@ export class ContatoDataService {
     // tslint:disable-next-line: object-literal-shorthand
     this.contatoSource.next({ contato: contato, key: key });
   }
-
-
 }
 

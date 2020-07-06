@@ -9,8 +9,7 @@
 
 <ion-content padding>
   <ion-button [routerLink] = "['/criarcontato']" routerdirection = "forward" color="tertiary" expand="block">Criar novo contato</ion-button> 
-  <ion-toolbar>
-    <ion-searchbar placeholder="Buscar contato"></ion-searchbar>    
+  <ion-toolbar>      
 <ion-card *ngFor = 'let contato of contatos | async'>  
     <ion-card-content>
       <ion-card-title>

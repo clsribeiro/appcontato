@@ -16,9 +16,9 @@ import { DatePipe } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { from } from 'rxjs';
-import { ContatoDataService } from './contatos/shared/contato-data.service';
-import { Contato } from './contatos/shared/contato';
-import { ContatoService } from './contatos/shared/contato.service';
+import { ContatoService } from './services/contato.service';
+import { ContatoDataService } from './services/contato-data.service';
+import { Contato } from './pages/contatos/interfaces/contato';
 
 @NgModule({
   declarations: [

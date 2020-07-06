@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { CriarcontatoPageRoutingModule } from './criarcontato-routing.module';
 import { CriarcontatoPage } from './criarcontato.page';
-import { Contato } from '../contatos/shared/contato';
+import { Contato } from '../contatos/interfaces/contato';
 
 @NgModule({
   imports: [

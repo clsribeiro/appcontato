@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { Contato } from './contato';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Endereco } from 'src/app/criarcontato/endereco';
+import { Contato } from '../pages/contatos/interfaces/contato';
+import { Endereco } from '../pages/contatos/interfaces/endereco';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class ContatoService {
       .snapshotChanges()
       .pipe(
         map(changes => {
-          return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+          return changes.map(c => ({ key: c.payload.key, ...c.payload.val() as {} }));
         })
       );
   }

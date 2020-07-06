@@ -1,3 +1,5 @@
+import { ContatoDataService } from './../../services/contato-data.service';
+import { ContatoService } from './../../services/contato.service';
 import { Router, RouterModule } from '@angular/router';
 import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
 import { HttpClient } from '@angular/common/http';
@@ -5,9 +7,8 @@ import { Component, OnInit, Output } from '@angular/core';
 import { AlertController, ActionSheetController, NavController } from '@ionic/angular';
 import { FormBuilder, Validators, NgForm } from '@angular/forms';
 import { MapOperator } from 'rxjs/internal/operators/map';
-import { ContatoDataService } from '../contatos/shared/contato-data.service';
-import { Contato } from '../contatos/shared/contato';
-import { ContatoService } from '../contatos/shared/contato.service';
+import { Contato } from '../contatos/interfaces/contato';
+
 
 
 @Component({

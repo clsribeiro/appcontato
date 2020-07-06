@@ -7,10 +7,10 @@ import * as _ from 'lodash';
 import { RouterModule, Routes, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Router } from '@angular/router';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { ContatoService } from './shared/contato.service';
 import { Observable } from 'rxjs';
-import { ContatoDataService } from './shared/contato-data.service';
-import { Contato } from './shared/contato';
+import { Contato } from './interfaces/contato';
+import { ContatoService } from '../../services/contato.service';
+import { ContatoDataService } from '../../services/contato-data.service';
 
 
 
